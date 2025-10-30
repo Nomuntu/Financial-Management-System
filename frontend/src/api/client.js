@@ -1,13 +1,17 @@
 // frontend/src/api/client.js
 
-// Normalize base (remove trailing slashes)
 const RAW_BASE = import.meta.env.VITE_API_URL || 'http://localhost:8000';
 export const API_BASE = RAW_BASE.replace(/\/+$/, '');
 
-// Join base + path safely: always exactly one slash
+// DEBUG: show what URL the app will actually use
+console.log('API_BASE =', API_BASE);
+
 function urlFor(path) {
-  const p = String(path || '').replace(/^\/+/, ''); // remove leading slashes
-  return `${API_BASE}/${p}`;
+  const p = String(path || '').replace(/^\/+/, '');
+  const finalUrl = `${API_BASE}/${p}`;
+  // DEBUG: log every outgoing request URL
+  console.log('FETCH →', finalUrl);
+  return finalUrl;
 }
 
 export const authHeader = () => {
@@ -25,9 +29,7 @@ async function handle(res) {
 }
 
 export async function get(path) {
-  const res = await fetch(urlFor(path), {
-    headers: { ...authHeader() },
-  });
+  const res = await fetch(urlFor(path), { headers: { ...authHeader() } });
   return handle(res);
 }
 
