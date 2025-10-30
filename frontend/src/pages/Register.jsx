@@ -11,7 +11,12 @@ export default function Register(){
 
   const onRegister = async ()=>{
     try{
-      await post('/auth/register', { email, password, full_name, organization_name })
+      await post('auth/register', {
+  full_name: name,
+  organization_name: org,
+  email,
+  password,
+});
       setMsg('Registered. You can now login.')
       setErr('')
     }catch(e){ setErr(String(e)); setMsg('') }
