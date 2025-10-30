@@ -1,4 +1,4 @@
-export const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+export const API_BASE = (import.meta.env.VITE_API_URL || 'http://localhost:8000').replace(/\/+$/, '');
 
 export const authHeader = () => {
   const token = localStorage.getItem('token');
@@ -22,15 +22,6 @@ export async function get(path){
 export async function post(path, body){
   const res = await fetch(`${API_BASE}${path}`, {
     method:'POST',
-    headers: { 'Content-Type':'application/json', ...authHeader() },
-    body: JSON.stringify(body || {})
-  });
-  return handle(res);
-}
-
-export async function put(path, body){
-  const res = await fetch(`${API_BASE}${path}`, {
-    method:'PUT',
     headers: { 'Content-Type':'application/json', ...authHeader() },
     body: JSON.stringify(body || {})
   });
