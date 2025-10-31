@@ -7,9 +7,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libcairo2 libgdk-pixbuf-2.0-0 shared-mime-info fonts-dejavu-core \
  && rm -rf /var/lib/apt/lists/*
 
-WORKDIR /app
-# copy requirements, install, copy project, etc.
-CMD ["uvicorn", "backend.main:app", "--host", "0.0.0.0", "--port", "8000"]
+ENV PYTHONPATH=/app
+CMD ["uvicorn", "backend.main:app", "--host", "0.0.0.0", "--port", "10000"]
 
 # Install Python dependencies
 COPY requirements.txt .
